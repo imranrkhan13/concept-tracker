@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+
+    <title>Developer Learning Tracker</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fef6e4 0%, #f3d2c1 50%, #f582ae 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: #8b4513;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #d4a574 0%, #8b4513 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.85;
+            font-weight: 400;
+            color: #6b4423;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #ffffff 0%, #fff9f0 100%);
+            border-radius: 25px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(139, 69, 19, 0.12);
+            border: 3px solid #f5e6d3;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(196, 154, 108, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(139, 69, 19, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #d4a574 0%, #8b4513 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #a67c52;
+            font-size: 1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #ffffff 0%, #fff9f0 100%);
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 10px 50px rgba(139, 69, 19, 0.15);
+            border: 3px solid #f5e6d3;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 15px 60px rgba(139, 69, 19, 0.2);
+        }
+
+        .card h2 {
+            color: #8b5a3c;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #6b4423;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e8d4b8;
+            border-radius: 15px;
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #d4a574;
+            box-shadow: 0 0 0 5px rgba(196, 154, 108, 0.15);
+            transform: translateY(-2px);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #d4a574 0%, #8b4513 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 15px;
+            font-size: 1.05em;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(196, 154, 108, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(196, 154, 108, 0.5);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .concept-item {
+            background: white;
+            border-left: 6px solid #d4a574;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 18px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.08);
+            position: relative;
+        }
+
+        .concept-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.15);
+            border-left-color: #8b4513;
+        }
+
+        .concept-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .concept-name {
+            font-weight: 600;
+            font-size: 1.25em;
+            color: #333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .understanding-badge {
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .understanding-learning {
+            background: linear-gradient(135deg, #fff4e6 0%, #ffe8cc 100%);
+            color: #c87d2f;
+            border: 2px solid #f5d9b8;
+        }
+
+        .understanding-comfortable {
+            background: linear-gradient(135deg, #e6f4f1 0%, #ccebe5 100%);
+            color: #2d8b73;
+            border: 2px solid #b8e5d8;
+        }
+
+        .understanding-mastered {
+            background: linear-gradient(135deg, #e8f5e9 0%, #d4edda 100%);
+            color: #2e7d32;
+            border: 2px solid #c8e6c9;
+        }
+
+        .understanding-confused {
+            background: linear-gradient(135deg, #ffeaea 0%, #ffd6d6 100%);
+            color: #c62828;
+            border: 2px solid #ffcdd2;
+        }
+
+        .projects-used {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .project-tag {
+            background: linear-gradient(135deg, #d4a574 0%, #c49a6c 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(196, 154, 108, 0.3);
+        }
+
+        .confusion-note {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            border-left: 4px solid #dc3545;
+            padding: 12px;
+            margin-top: 12px;
+            font-style: italic;
+            font-size: 0.95em;
+            color: #721c24;
+            border-radius: 8px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            color: #8b5a3c;
+            border: 2px solid #e8d4b8;
+            padding: 12px 22px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: #f5e6d3;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #d4a574 0%, #8b4513 100%);
+            color: white;
+            border-color: #d4a574;
+            box-shadow: 0 4px 15px rgba(196, 154, 108, 0.4);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #a67c52;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+
+        .delete-btn,
+        .edit-btn,
+        .resources-btn,
+        .ai-summary-btn {
+            padding: 8px 16px;
+            font-size: 0.85em;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 10px;
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        .edit-btn {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        }
+
+        .resources-btn {
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+        }
+
+        .ai-summary-btn {
+            background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(139, 69, 19, 0.75);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #fff9f0 100%);
+            border-radius: 25px;
+            padding: 35px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border: 3px solid #e8d4b8;
+            animation: slideUp 0.4s;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            color: #8b5a3c;
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2em;
+            cursor: pointer;
+            color: #8b5a3c;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: none;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg);
+            color: #6b4423;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .button-group button {
+            flex: 1;
+        }
+
+        .cancel-btn {
+            background: linear-gradient(135deg, #e8d4b8 0%, #d4c4a8 100%);
+            color: #6b4423;
+        }
+
+        .resource-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid #28a745;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .resource-item h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .resource-item a {
+            color: #28a745;
+            text-decoration: none;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .resource-item a:hover {
+            text-decoration: underline;
+        }
+
+        .resource-source {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #8b5a3c;
+            font-style: italic;
+        }
+
+        .ai-summary-box {
+            background: linear-gradient(135deg, #f0e6ff 0%, #e6d5ff 100%);
+            border: 3px solid #d4c5f9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .ai-summary-box h4 {
+            color: #6f42c1;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ai-summary-box p {
+            color: #4a2c7a;
+            line-height: 1.8;
+            font-size: 0.95em;
+        }
+
+        .resources-section {
+            margin-top: 15px;
+        }
+
+        .resources-section h4 {
+            color: #28a745;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .concept-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Developer Learning Tracker</h1>
+            <p>Track what you actually understand, not just what you've watched</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalConcepts">0</div>
+                <div class="stat-label">Total Concepts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="masteredCount">0</div>
+                <div class="stat-label">Mastered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="projectsCount">0</div>
+                <div class="stat-label">Projects Applied</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="confusedCount">0</div>
+                <div class="stat-label">Need Review</div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="card">
+                <h2>➕ Add New Concept</h2>
+                <form id="conceptForm">
+                    <div class="input-group">
+                        <label>Concept Name</label>
+                        <input type="text" id="conceptName" placeholder="e.g., React Hooks, Async/Await" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Understanding Level</label>
+                        <select id="understandingLevel" required>
+                            <option value="learning">Learning - Just started</option>
+                            <option value="comfortable">Comfortable - Can use with docs</option>
+                            <option value="mastered">Mastered - Can teach others</option>
+                            <option value="confused">Confused - Need help</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Projects Used In (comma separated)</label>
+                        <input type="text" id="projectsUsed" placeholder="e.g., Portfolio Site, Todo App">
+                    </div>
+                    <div class="input-group">
+                        <label>Confusion Notes (optional)</label>
+                        <textarea id="confusionNotes"
+                            placeholder="What's tripping you up? What questions do you have?"></textarea>
+                    </div>
+                    <button type="submit">Add Concept</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>📚 Your Learning Journey</h2>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="learning">Learning</button>
+                    <button class="filter-btn" data-filter="comfortable">Comfortable</button>
+                    <button class="filter-btn" data-filter="mastered">Mastered</button>
+                    <button class="filter-btn" data-filter="confused">Confused</button>
+                </div>
+                <div id="conceptsList">
+                    <div class="empty-state">
+                        <p>No concepts tracked yet. Add your first one! 🚀</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Modal -->
+        <div class="modal" id="editModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>✏️ Edit Concept</h2>
+                    <button class="close-btn" onclick="closeEditModal()">&times;</button>
+                </div>
+                <form id="editForm">
+                    <input type="hidden" id="editId">
+                    <div class="input-group">
+                        <label>Concept Name</label>
+                        <input type="text" id="editConceptName" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Understanding Level</label>
+                        <select id="editUnderstandingLevel" required>
+                            <option value="learning">Learning - Just started</option>
+                            <option value="comfortable">Comfortable - Can use with docs</option>
+                            <option value="mastered">Mastered - Can teach others</option>
+                            <option value="confused">Confused - Need help</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Projects Used In (comma separated)</label>
+                        <input type="text" id="editProjectsUsed">
+                    </div>
+                    <div class="input-group">
+                        <label>Confusion Notes (optional)</label>
+                        <textarea id="editConfusionNotes"></textarea>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
+                        <button type="submit">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Resources Modal -->
+        <div class="modal" id="resourcesModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>📚 Learning Resources</h2>
+                    <button class="close-btn" onclick="closeResourcesModal()">&times;</button>
+                </div>
+                <div id="resourcesContent">
+                    <div class="loading">Loading resources...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Summary Modal -->
+        <div class="modal" id="aiSummaryModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>🤖 AI Concept Summary</h2>
+                    <button class="close-btn" onclick="closeAISummaryModal()">&times;</button>
+                </div>
+                <div id="aiSummaryContent">
+                    <div class="loading">Generating AI summary...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        let concepts = [];
+        let currentFilter = 'all';
+
+        // ================== LocalStorage ==================
+        function loadConcepts() {
+            const stored = localStorage.getItem('devConcepts');
+            if (stored) {
+                concepts = JSON.parse(stored);
+                renderConcepts();
+                updateStats();
+            }
+        }
+
+        function saveConcepts() {
+            localStorage.setItem('devConcepts', JSON.stringify(concepts));
+        }
+
+        // ================== Add Concept ==================
+        document.getElementById('conceptForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const conceptName = document.getElementById('conceptName').value.trim();
+            const alreadyExists = concepts.some(c => c.name.toLowerCase() === conceptName.toLowerCase());
+            if (alreadyExists) {
+                alert('This concept is already added!');
+                return;
+            }
+
+            const concept = {
+                id: Date.now(),
+                name: conceptName,
+                understanding: document.getElementById('understandingLevel').value,
+                projects: document.getElementById('projectsUsed').value.split(',').map(p => p.trim()).filter(p => p),
+                confusion: document.getElementById('confusionNotes').value,
+                dateAdded: new Date().toLocaleDateString(),
+                resources: null,
+                aiSummary: null
+            };
+
+            concepts.unshift(concept);
+            saveConcepts();
+            renderConcepts();
+            updateStats();
+            e.target.reset();
+        });
+
+        // ================== Render Concepts ==================
+        function renderConcepts() {
+            const list = document.getElementById('conceptsList');
+            let filtered = currentFilter === 'all' ? concepts : concepts.filter(c => c.understanding === currentFilter);
+
+            if (filtered.length === 0) {
+                let message = currentFilter === 'all' ?
+                    "No concepts tracked yet. Add your first one! 🚀" :
+                    `No concepts in "${currentFilter}" category yet!`;
+                list.innerHTML = `<div class="empty-state"><p>${message}</p></div>`;
+                return;
+            }
+
+            list.innerHTML = filtered.map(concept => {
+                const understanding = concept.understanding || 'learning';
+                const level = understanding.charAt(0).toUpperCase() + understanding.slice(1);
+                const projects = Array.isArray(concept.projects) ? concept.projects : [];
+
+                return `
+            <div class="concept-item">
+                <div class="concept-header">
+                    <div class="concept-name">${concept.name}</div>
+                    <div class="action-buttons">
+                        <span class="understanding-badge understanding-${understanding}">${level}</span>
+                        <button class="ai-summary-btn" onclick="getAISummary(${concept.id})">🤖 AI Summary</button>
+                        <button class="resources-btn" onclick="getResources(${concept.id})">📚 Resources</button>
+                        <button class="edit-btn" onclick="editConcept(${concept.id})">✏️ Edit</button>
+                        <button class="delete-btn" onclick="deleteConcept(${concept.id})">🗑️ Delete</button>
+                    </div>
+                </div>
+                ${projects.length > 0 ? `
+                    <div class="projects-used">
+                        ${projects.map(p => `<span class="project-tag">📁 ${p}</span>`).join('')}
+                    </div>
+                ` : '<div class="concept-details" style="color:#999;">No projects yet</div>'}
+                ${concept.confusion ? `<div class="confusion-note">💭 ${concept.confusion}</div>` : ''}
+                ${concept.aiSummary ? `
+                    <div class="ai-summary-box">
+                        <h4>🤖 AI Summary</h4>
+                        <p>${concept.aiSummary}</p>
+                    </div>
+                ` : ''}
+                ${concept.resources ? `
+                    <div class="resources-section">
+                        <h4>📚 Learning Resources</h4>
+                        ${concept.resources.map(r => `
+                            <div class="resource-item">
+                                <h4>${r.title}</h4>
+                                <a href="${r.url}" target="_blank">${r.url}</a>
+                                <div><span class="resource-source">${r.source}</span></div>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            </div>
+        `;
+            }).join('');
+        }
+
+        // ================== Get Resources ==================
+        async function getResources(id) {
+            const concept = concepts.find(c => c.id === id);
+            if (!concept) return;
+
+            document.getElementById('resourcesModal').classList.add('active');
+            document.getElementById('resourcesContent').innerHTML =
+                '<div class="loading">🔍 Loading resources...</div>';
+
+            try {
+                const query = encodeURIComponent(concept.name);
+                const res = await fetch(
+                    `https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${query}&site=stackoverflow`
+                );
+                const data = await res.json();
+
+                const resources = data.items.slice(0, 5).map(item => ({
+                    title: item.title,
+                    url: item.link,
+                    source: "StackOverflow"
+                }));
+
+                concept.resources = resources;
+                saveConcepts();
+                renderConcepts();
+
+                document.getElementById('resourcesContent').innerHTML = resources.map(r => `
+            <div class="resource-item">
+                <h4>${r.title}</h4>
+                <a href="${r.url}" target="_blank">${r.url}</a>
+                <div><span class="resource-source">${r.source}</span></div>
+            </div>
+        `).join('');
+            } catch (err) {
+                document.getElementById('resourcesContent').innerHTML =
+                    '<div class="empty-state">❌ Failed to load resources.</div>';
+                console.error(err);
+            }
+        }
+
+        function closeResourcesModal() {
+            document.getElementById('resourcesModal').classList.remove('active');
+        }
+
+        // ================== AI Summary ==================
+        function getAISummary(id) {
+            const concept = concepts.find(c => c.id === id);
+            if (!concept) return;
+
+            alert(`AI summary coming soon for: ${concept.name}`);
+        }
+
+        function closeAISummaryModal() {
+            document.getElementById('aiSummaryModal').classList.remove('active');
+        }
+
+        // ================== Delete & Edit ==================
+        function deleteConcept(id) {
+            if (!confirm("Are you sure you want to delete this concept?")) return;
+            concepts = concepts.filter(c => c.id !== id);
+            saveConcepts();
+            renderConcepts();
+            updateStats();
+        }
+
+        function editConcept(id) {
+            const concept = concepts.find(c => c.id === id);
+            if (!concept) return;
+
+            document.getElementById('editId').value = concept.id;
+            document.getElementById('editConceptName').value = concept.name;
+            document.getElementById('editUnderstandingLevel').value = concept.understanding;
+            document.getElementById('editProjectsUsed').value =
+                Array.isArray(concept.projects) ? concept.projects.join(', ') : '';
+            document.getElementById('editConfusionNotes').value = concept.confusion || '';
+
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+            document.getElementById('editForm').reset();
+        }
+
+        document.getElementById('editForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const id = Number(document.getElementById('editId').value);
+            const index = concepts.findIndex(c => c.id === id);
+            if (index === -1) return;
+
+            concepts[index] = {
+                ...concepts[index],
+                name: document.getElementById('editConceptName').value,
+                understanding: document.getElementById('editUnderstandingLevel').value,
+                projects: document.getElementById('editProjectsUsed').value
+                    .split(',')
+                    .map(p => p.trim())
+                    .filter(Boolean),
+                confusion: document.getElementById('editConfusionNotes').value
+            };
+
+            saveConcepts();
+            renderConcepts();
+            updateStats();
+            closeEditModal();
+        });
+
+        // ================== Stats ==================
+        function updateStats() {
+            document.getElementById('totalConcepts').textContent = concepts.length;
+            document.getElementById('masteredCount').textContent =
+                concepts.filter(c => c.understanding === 'mastered').length;
+
+            const uniqueProjects = new Set();
+            concepts.forEach(c => {
+                const projects = Array.isArray(c.projects) ? c.projects : [];
+                projects.forEach(p => uniqueProjects.add(p));
+            });
+            document.getElementById('projectsCount').textContent = uniqueProjects.size;
+
+            document.getElementById('confusedCount').textContent =
+                concepts.filter(c => c.understanding === 'confused').length;
+        }
+
+        // ================== Filter ==================
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderConcepts();
+            });
+        });
+    document.querySelectorAll('.close-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const modal = btn.closest('.modal');
+            if (modal) modal.classList.remove('active');
+        });
+    });
+
+     // ================== Global Functions ==================
+        window.editConcept = editConcept;
+        window.deleteConcept = deleteConcept;
+        window.getResources = getResources;
+        window.getAISummary = getAISummary;
+
+        // expose modal close functions
+        window.closeResourcesModal = closeResourcesModal;
+        window.closeEditModal = closeEditModal;
+        window.closeAISummaryModal = closeAISummaryModal;
+
+        // ================== Initial Load ==================
+        loadConcepts();
+
+
+        // ================== Initial Load ==================
+        loadConcepts();
+    </script>
+
+</body>
+
+</html>
